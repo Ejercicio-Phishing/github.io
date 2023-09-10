@@ -23,10 +23,10 @@
             <p>Ubicación de la IP: <span id="ipLocation"></span></p>
         </section>
         
-        <!-- Agrega la ubicación y el enlace a Google Maps -->
+        <!-- Agrega un enlace que abre un mapa de Google en una ventana emergente -->
         <section>
             <p>Ubicación actual:</p>
-            <a href="https://www.google.com/maps" target="_blank">Ver en Google Maps</a>
+            <a href="#" id="openMapLink">Ver en Google Maps</a>
         </section>
     </main>
     <footer>
@@ -67,9 +67,16 @@
 
         document.getElementById('visitorNumber').textContent = visitorNumber;
         document.getElementById('visitTime').textContent = visitTimeString;
+
+        // JavaScript para abrir un mapa de Google en una ventana emergente
+        document.getElementById('openMapLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.open('https://www.google.com/maps', 'Google Maps', 'width=800,height=600');
+        });
     </script>
 </body>
 </html>
+
 
 
 
