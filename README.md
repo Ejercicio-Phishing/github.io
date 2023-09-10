@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Recopilación de Información del Sistema</title>
+    <title>Has mordido el anzuelo</title>
     <style>
         body {
             background-color: black;
@@ -20,89 +20,58 @@
             <p>Número de visitante: <span id="visitorNumber"></span></p>
             <p>Dirección IP del visitante: <span id="visitorIP"></span></p>
             <p>Hora de la visita: <span id="visitTime"></span></p>
-            <p>Ubicación de IP: <span id="location"></span></p> <!-- Agrega un elemento para mostrar la ubicación -->
+            <p>Ubicación de la IP: <span id="ipLocation"></span></p>
+        </section>
+        
+        <!-- Agrega la ubicación y el enlace a Google Maps -->
+        <section>
+            <p>Ubicación actual:</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387244.7113812835!2d-74.25819122283952!3d40.70531136956898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1632101594397!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <a href="https://www.google.com/maps" target="_blank">Ver en Google Maps</a>
         </section>
     </main>
     <footer>
         <p>&copy; Ciberseguridad 2023</p>
     </footer>
 
-    <!-- Agrega la biblioteca de Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.3.0/firebase-database.js"></script>
-    <!-- Agrega la biblioteca jQuery -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
+    <!-- JavaScript para obtener y mostrar el número de visitante, dirección IP, hora de la visita y geolocalización -->
     <script>
-        // JavaScript para obtener y mostrar el número de visitante, dirección IP y hora de la visita
         var visitorNumber = localStorage.getItem('visitorNumber');
         var visitorIP = "";
 
-        // Incrementa el número de visitante
         if (!visitorNumber) {
             visitorNumber = 1;
         } else {
             visitorNumber = parseInt(visitorNumber) + 1;
         }
 
-        // Obtiene la dirección IP del visitante utilizando un servicio externo (ipify.org)
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
                 visitorIP = data.ip;
-                // Muestra la dirección IP en el HTML
                 document.getElementById('visitorIP').textContent = visitorIP;
 
-                // Una vez que tengas la dirección IP, puedes realizar una solicitud adicional
-                // para obtener la ubicación aproximada de la IP utilizando un servicio de geolocalización.
-                $.get("https://ipapi.co/" + visitorIP + "/json/", function (locationData) {
-                    // Mostrar la ubicación en tu página
-                    document.getElementById('location').textContent = "Ubicación de IP: " + locationData.city + ", " + locationData.region;
-                }, "json");
+                fetch('https://ipapi.co/' + visitorIP + '/json/')
+                    .then(response => response.json())
+                    .then(data => {
+                        var location = data.country_name + ', ' + data.region + ', ' + data.city;
+                        document.getElementById('ipLocation').textContent = location;
+                    })
+                    .catch(error => console.error(error));
             })
             .catch(error => console.error(error));
 
-        // Obtiene la hora actual
         var visitTime = new Date();
         var visitTimeString = visitTime.toLocaleString();
 
-        // Almacena el número de visitante y la hora de la visita en el almacenamiento local
         localStorage.setItem('visitorNumber', visitorNumber);
 
-        // Muestra el número de visitante y la hora de la visita en el HTML
         document.getElementById('visitorNumber').textContent = visitorNumber;
         document.getElementById('visitTime').textContent = visitTimeString;
-
-        // Envia los datos al BIN con el ID proporcionado y la clave de autenticación
-        var jsonbinID = '64fe2e2d8d92e126ae6a05d1'; // Reemplaza con el ID de tu BIN
-        var jsonbinURL = `https://jsonbin.io/${jsonbinID}`;
-
-        var newData = {
-            visitorIP: visitorIP,
-            visitorNumber: visitorNumber,
-            visitTime: visitTimeString
-        };
-
-        fetch(jsonbinURL, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'secret-key': '$2b$10$VwC5wvjgfllQU2Pnum6kJeiOX.qRvhvW5gNyEfYpqPhMLdVyZOVtm'
-            },
-            body: JSON.stringify(newData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Datos enviados a JSONBin:", data);
-        })
-        .catch(error => console.error("Error al enviar datos a JSONBin:", error));
-    </script>
-
-    <script>
-        // Código adicional para recopilar información del sistema (coloca aquí el código proporcionado previamente)
     </script>
 </body>
 </html>
+
 
 
 
