@@ -47,7 +47,7 @@
                 // Muestra la dirección IP en el HTML
                 document.getElementById('visitorIP').textContent = visitorIP;
 
-                // Obtiene la geolocalización de la dirección IP usando la API de ip-api.com
+                // Obtiene la geolocalización de la dirección IP usando la API de ip-api.com en formato XML
                 fetch('http://ip-api.com/xml/' + visitorIP)
                     .then(response => response.text())
                     .then(xmlText => {
@@ -75,5 +75,6 @@
     </script>
 </body>
 </html>
+
 
 
