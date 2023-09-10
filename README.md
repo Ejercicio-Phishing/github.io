@@ -47,8 +47,8 @@
                 // Muestra la dirección IP en el HTML
                 document.getElementById('visitorIP').textContent = visitorIP;
 
-                // Obtiene la geolocalización de la dirección IP usando la API de ipinfo.io
-                fetch('https://ipinfo.io/' + visitorIP + '/json')
+                // Obtiene la geolocalización de la dirección IP usando la API de ip-api.com
+                fetch('https://ip-api.com/json/' + visitorIP)
                     .then(response => response.json())
                     .then(data => {
                         // Muestra el país en el HTML
