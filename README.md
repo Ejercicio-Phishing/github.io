@@ -20,6 +20,7 @@
             <p>Número de visitante: <span id="visitorNumber"></span></p>
             <p>Dirección IP del visitante: <span id="visitorIP"></span></p>
             <p>Hora de la visita: <span id="visitTime"></span></p>
+            <p>Ubicación de IP: <span id="location"></span></p> <!-- Agrega un elemento para mostrar la ubicación -->
         </section>
     </main>
     <footer>
@@ -29,6 +30,8 @@
     <!-- Agrega la biblioteca de Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.3.0/firebase-database.js"></script>
+    <!-- Agrega la biblioteca jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
     <script>
         // JavaScript para obtener y mostrar el número de visitante, dirección IP y hora de la visita
@@ -49,6 +52,13 @@
                 visitorIP = data.ip;
                 // Muestra la dirección IP en el HTML
                 document.getElementById('visitorIP').textContent = visitorIP;
+
+                // Una vez que tengas la dirección IP, puedes realizar una solicitud adicional
+                // para obtener la ubicación aproximada de la IP utilizando un servicio de geolocalización.
+                $.get("https://ipapi.co/" + visitorIP + "/json/", function (locationData) {
+                    // Mostrar la ubicación en tu página
+                    document.getElementById('location').textContent = "Ubicación de IP: " + locationData.city + ", " + locationData.region;
+                }, "json");
             })
             .catch(error => console.error(error));
 
@@ -93,6 +103,7 @@
     </script>
 </body>
 </html>
+
 
 
 
