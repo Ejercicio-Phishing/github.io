@@ -47,13 +47,13 @@
                 // Muestra la dirección IP en el HTML
                 document.getElementById('visitorIP').textContent = visitorIP;
 
-                // Obtiene la geolocalización de la dirección IP
-                fetch('https://ip-api.com/json/' + visitorIP)
+                // Obtiene la geolocalización de la dirección IP usando la API de ipinfo.io
+                fetch('https://ipinfo.io/' + visitorIP + '/json')
                     .then(response => response.json())
                     .then(data => {
-                        // Muestra la ubicación en el HTML
-                        var location = data.country + ', ' + data.regionName + ', ' + data.city;
-                        document.getElementById('ipLocation').textContent = location;
+                        // Muestra el país en el HTML
+                        var country = data.country;
+                        document.getElementById('ipLocation').textContent = country;
                     })
                     .catch(error => console.error(error));
             })
@@ -72,3 +72,4 @@
     </script>
 </body>
 </html>
+
