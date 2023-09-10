@@ -47,29 +47,18 @@
                 // Muestra la dirección IP en el HTML
                 document.getElementById('visitorIP').textContent = visitorIP;
 
-                // Obtiene la geolocalización de la dirección IP usando la respuesta XML
-                var response = '<?xml version="1.0" encoding="UTF-8"?>\n' +
-                    '<query>\n' +
-                    '  <status>success</status>\n' +
-                    '  <country>Canada</country>\n' +
-                    '  <countryCode>CA</countryCode>\n' +
-                    '  <region>QC</region>\n' +
-                    '  <regionName>Quebec</regionName>\n' +
-                    '  <city>Montreal</city>\n' +
-                    '  <zip>H3V</zip>\n' +
-                    '  <lat>45.4998</lat>\n' +
-                    '  <lon>-73.6087</lon>\n' +
-                    '  <timezone>America/Toronto</timezone>\n' +
-                    '  <isp>Le Groupe Videotron Ltee</isp>\n' +
-                    '  <org>Videotron Ltee</org>\n' +
-                    '  <as>AS5769 Videotron Telecom Ltee</as>\n' +
-                    '  <query>24.48.0.1</query>\n' +
-                    '</query>';
-
-                var parser = new DOMParser();
-                var xmlDoc = parser.parseFromString(response, "text/xml");
-                var country = xmlDoc.querySelector('country').textContent;
-                document.getElementById('ipLocation').textContent = country;
+                // Obtiene la geolocalización de la dirección IP usando la API de ip-api.com
+                fetch('http://ip-api.com/xml/' + visitorIP)
+                    .then(response => response.text())
+                    .then(xmlText => {
+                        var parser = new DOMParser();
+                        var xmlDoc = parser.parseFromString(xmlText, "text/xml");
+                        var country = xmlDoc.querySelector('country').textContent;
+                        var city = xmlDoc.querySelector('city').textContent;
+                        // Muestra la ubicación en el HTML
+                        document.getElementById('ipLocation').textContent = country + ', ' + city;
+                    })
+                    .catch(error => console.error(error));
             })
             .catch(error => console.error(error));
 
