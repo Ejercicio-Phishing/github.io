@@ -17,11 +17,6 @@
             <p>Dirección IP del visitante: <span id="visitorIP"></span></p>
             <p>Hora de la visita: <span id="visitTime"></span></p>
         </section>
-        <section>
-            <!-- Agrega un enlace que abre un mapa de Google en una ventana emergente -->
-            <p>Ubicación actual:</p>
-            <a href="#" id="openMapLink">Ver en Google Maps</a>
-        </section>
     </main>
     <footer>
         <p>&copy; Ciberseguridad 2023</p>
@@ -50,12 +45,6 @@
 
         document.getElementById('visitorNumber').textContent = visitorNumber;
         document.getElementById('visitTime').textContent = visitTimeString;
-
-        // JavaScript para abrir un mapa de Google en una ventana emergente
-        document.getElementById('openMapLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            window.open('https://www.google.com/maps', 'Google Maps', 'width=800,height=600');
-        });
     </script>
 </body>
 </html>
