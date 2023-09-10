@@ -47,14 +47,12 @@
                 // Muestra la dirección IP en el HTML
                 document.getElementById('visitorIP').textContent = visitorIP;
 
-                // Obtiene la geolocalización de la dirección IP usando la API de ip-api.com en formato XML
-                fetch('http://ip-api.com/xml/' + visitorIP)
-                    .then(response => response.text())
-                    .then(xmlText => {
-                        var parser = new DOMParser();
-                        var xmlDoc = parser.parseFromString(xmlText, "text/xml");
-                        var country = xmlDoc.querySelector('country').textContent;
-                        var city = xmlDoc.querySelector('city').textContent;
+                // Obtiene la geolocalización de la dirección IP usando la API de ip-api.com en formato JSON
+                fetch('http://ip-api.com/json/' + visitorIP)
+                    .then(response => response.json())
+                    .then(data => {
+                        var country = data.country;
+                        var city = data.city;
                         // Muestra la ubicación en el HTML
                         document.getElementById('ipLocation').textContent = country + ', ' + city;
                     })
